@@ -1,0 +1,7 @@
+[package]
+name = "rb-proxy"
+version = "0.1.0"
+authors = ["Danil Guskov <d.guskov@corp.mail.ru>"]
+edition = "2018"
+
+[dependencies]
