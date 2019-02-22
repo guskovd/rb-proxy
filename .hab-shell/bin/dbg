@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+# -*- coding: utf-8 -*-
+
+cargo build -q
+binary=$(cargo metadata --format-version 1 | jq -r '.packages[].targets[] | select( .kind | map(. == "bin") | any ) | select ( .src_path | contains(".cargo/registry") | . != true ) | .name')
+gdb --eval-command=run --args ./target/debug/$binary

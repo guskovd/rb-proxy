@@ -7,28 +7,30 @@ pkg_upstream_url="https://github.com/guskovd/rb-proxy"
 
 pkg_hab_shell_interpreter="bash"
 
-RUBY_VERSION=2.5.1
+RUBY_VERSION=2.5.3
 
 pkg_deps=(
-    core/bash/4.4.19/20180608092913
-    core/clang/7.0.0/20181212192223
-    core/docker/18.03.0/20180608150948
-    core/gawk/4.2.0/20180608093856
-    core/gcc-libs/7.3.0/20180608091701
-    core/gcc/7.3.0/20180608051919
-    core/git/2.18.0/20181218161804
-    core/grep/3.1/20180608092809
-    core/hab/0.73.0/20190115004751
-    core/libarchive/3.3.2/20181214200119
-    core/libsodium/1.0.13/20180703181056
-    core/make/4.2.1/20180608100733
-    core/openssl/1.0.2q/20181212183918
-    core/pkg-config/0.29.2/20180608091734
-    core/rsync/3.1.2/20180608145950
-    core/ruby/2.5.1/20181212185250
-    core/sshpass/1.06/20180608151129
-    core/sudo/1.8.18p1/20181219210923
-    guskovd/rust-nightly/1.32.0-2018-12-13/20181214174458
+    core/bash
+    core/clang
+    core/docker
+    core/gawk
+    core/gcc-libs
+    core/gcc
+    core/git
+    core/grep
+    core/hab
+    core/libarchive
+    core/libsodium
+    core/make
+    core/openssl
+    core/pkg-config
+    core/rsync
+    core/ruby/$RUBY_VERSION
+    core/sshpass
+    core/sudo
+    core/gdb
+    core/jq-static
+    core/rust-nightly
 )
 
 do_shell() {
