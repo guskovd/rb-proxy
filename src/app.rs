@@ -1,15 +1,18 @@
 extern crate warp;
 extern crate futures;
 
-use warp::{Filter,Rejection};
+use warp::{Filter, filters::BoxedFilter, Reply};
 
-pub fn routes() -> impl Filter<Extract = (String,), Error = Rejection> {
-    let server = warp::path::path("hello")
+pub fn routes() -> BoxedFilter<(impl Reply,)> {
+    let proxy = warp::path::path("proxy")
         .and(warp::path::param())
         .map(|name: String| {
             format!("Hello, {}!", name)
         });
-    server
+    let r404 = warp::path::path("404")
+        .map(|| "404");
+    let routes = warp::get2().and(proxy.or(r404));
+    routes.boxed()
 }
 
 pub fn app(port: u16) {
@@ -26,15 +29,15 @@ mod tests {
     use std::thread;
 
     #[test]
-    fn smoke_test() {
+    fn test_proxy() {
         let port = serve();
-        request("/", port);
+        assert_ne!(request("/proxy/8081", port).status().as_u16(), 404);
     }
 
     #[test]
-    fn fake_test() {
+    fn test_404() {
         let port = serve();
-        request("/", port);
+        assert_eq!(request("/fake", port).status().as_u16(), 404);
     }
 
     fn serve() -> u16 {
@@ -56,7 +59,7 @@ mod tests {
         port
     }
 
-    fn request(path: &str, port: u16) {
+    fn request(path: &str, port: u16) -> warp::http::response::Response<hyper::body::Body>{
         let mut rt = Runtime::new().expect("rt new");
         let addr_str = format!("http://127.0.0.1:{}{}", port, path);
         rt.block_on(hyper::rt::lazy(move || {
@@ -64,6 +67,6 @@ mod tests {
             let uri = addr_str.parse().expect("server addr should parse");
             println!("{:?}", uri);
             client.get(uri)
-        })).unwrap();
+        })).unwrap()
     }
 }
