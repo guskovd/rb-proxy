@@ -30,7 +30,7 @@ pkg_deps=(
     core/sudo
     core/gdb
     core/jq-static
-    core/rust-nightly
+    guskovd/rust-nightly
 )
 
 do_shell() {
