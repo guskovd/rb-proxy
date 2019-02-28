@@ -31,6 +31,7 @@ pkg_deps=(
     core/gdb
     core/jq-static
     guskovd/rust-nightly
+    guskovd/rust-racer
 )
 
 do_shell() {
