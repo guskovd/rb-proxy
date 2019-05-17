@@ -31,13 +31,13 @@ mod tests {
     #[test]
     fn test_proxy() {
         let port = serve();
-        assert_ne!(request("/proxy/8081", port).status().as_u16(), 404);
+        assert_ne!(request(port, "/proxy/8081").status().as_u16(), 404);
     }
 
     #[test]
     fn test_404() {
         let port = serve();
-        assert_eq!(request("/fake", port).status().as_u16(), 404);
+        assert_eq!(request(port, "/fake").status().as_u16(), 404);
     }
 
     fn serve() -> u16 {
@@ -59,7 +59,7 @@ mod tests {
         port
     }
 
-    fn request(path: &str, port: u16) -> warp::http::response::Response<hyper::body::Body>{
+    fn request(port: u16, path: &str) -> warp::http::response::Response<hyper::body::Body>{
         let mut rt = Runtime::new().expect("rt new");
         let addr_str = format!("http://127.0.0.1:{}{}", port, path);
         rt.block_on(hyper::rt::lazy(move || {
