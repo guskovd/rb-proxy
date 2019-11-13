@@ -23,7 +23,7 @@ pub fn app(port: u16) {
 
 mod tests {
     use hyper::client::Client;
-    use futures::sync::oneshot;
+    use tokio::sync::oneshot;
     use std::sync::mpsc;
     use tokio::runtime::current_thread::Runtime;
     use std::thread;

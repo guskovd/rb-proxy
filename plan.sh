@@ -18,7 +18,7 @@ pkg_deps=(
     core/gcc
     core/git
     core/grep
-    core/hab
+    core/hab/0.75.0
     core/libarchive
     core/libsodium
     core/make
